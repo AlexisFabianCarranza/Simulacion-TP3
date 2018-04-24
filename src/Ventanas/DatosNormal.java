@@ -5,6 +5,7 @@
  */
 package Ventanas;
 
+import Ventanas.Datos;
 import distribuciones.Distribucion;
 import distribuciones.Normal;
 

@@ -6,23 +6,25 @@
 package Ventanas;
 
 import distribuciones.Distribucion;
+import testChiCuadrado.*;
 
 /**
  *
  * @author nicolastomassi
  */
 public class TablaChi extends javax.swing.JDialog {
-    private Distribucion distribucion;
-    private int cantidadDeIntervalos;
+    private TestChiCuadrado testChi;
     
     /**
      * Creates new form TablaChi
      */
-    public TablaChi(java.awt.Frame parent, boolean modal, Distribucion dist, int cantInt) {
+    public TablaChi(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.distribucion = dist;
-        this.cantidadDeIntervalos = cantInt;
+    }
+
+    public void setTestChi(TestChiCuadrado testChi) {
+        this.testChi = testChi;
     }
     
     /**

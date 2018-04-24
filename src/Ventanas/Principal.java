@@ -1,11 +1,19 @@
 package Ventanas;
 
+import Ventanas.DatosUniforme;
+import Ventanas.DatosNormal;
+import Ventanas.DatosExponencial;
 import distribuciones.*;
 import java.util.ArrayList;
 import java.util.Set;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.*;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import testChiCuadrado.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -22,7 +30,9 @@ public class Principal extends javax.swing.JFrame {
     private Distribucion distribucion;
     private Datos datos;
     private ArrayList numeros;
-    
+    private TestChiCuadrado testChi;
+    private int intervalos;
+
     public Principal() {
         initComponents();
     }
@@ -193,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
         //genera un ArrayList con todos los números generados
         
         int cantidad = Integer.valueOf(this.txtCantidad.getText());
-        int intervalos = Integer.valueOf(this.txtIntervalos.getText());
+        this.intervalos = Integer.valueOf(this.txtIntervalos.getText());
         
         if ( cantidad <= 0 || intervalos <= 0 || this.cmbDistribucion.getSelectedIndex() == 0) {
             //en caso de ser cero la cantidad solicitada o negativa no hace nada
@@ -206,10 +216,49 @@ public class Principal extends javax.swing.JFrame {
         {
             this.agregarFila((double)i);
         }
+        this.EjecutarTestChi();
     }//GEN-LAST:event_btnGenerarActionPerformed
-
+    
+    private void EjecutarTestChi()
+        {
+            if(this.distribucion instanceof Exponencial)
+            {
+                this.testChi = new ChiExponencial(this.intervalos, this.numeros,((Exponencial)this.distribucion).getMedia());
+            }
+            if(this.distribucion instanceof Normal)
+            {
+                Normal t1 = (Normal)this.distribucion;
+                this.testChi = new ChiNormal(this.intervalos, this.numeros,t1.getMedia(), t1.getDesviacionEstandar());
+            }
+            if(this.distribucion instanceof Poisson)
+            {
+                Poisson p = (Poisson) this.distribucion;
+                this.testChi = new ChiPoisson(this.intervalos, this.numeros,p.getMedia());
+            }
+            if(this.distribucion instanceof Uniforme)
+            {
+                this.testChi = new ChiUniforme(this.intervalos, this.numeros);
+            }
+            this.testChi.ejecutarTest();
+        }
+    
     private void btnGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoActionPerformed
         // TODO add your handling code here:
+        /*DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
+        
+        for (int i = 0; i < this.tblNum.getRowCount(); i++)
+        {
+            dtsc.addValue(Integer.parseInt((this.tblNum.getValueAt(i, 1).toString())), "Observada", this.tablaChi.getValueAt(i, 0).toString());
+            dtsc.addValue(Double.parseDouble((this.tablaChi.getValueAt(i, 2).toString())), "Esperada", this.tablaChi.getValueAt(i, 0).toString());
+        }
+        
+        JFreeChart jf = ChartFactory.createBarChart3D("Grafica de frecuencias", "Intervalos", "Frecuencia", dtsc, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel c = new ChartPanel(jf);
+        JDialog vtn = new JDialog(new javax.swing.JFrame(), true);
+        vtn.add(c);
+        vtn.setSize(900, 700);
+        vtn.setLocationRelativeTo(null);
+        vtn.setVisible(tru*/
     }//GEN-LAST:event_btnGraficoActionPerformed
 
     private void cmbDistribucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDistribucionActionPerformed
@@ -244,9 +293,9 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnChiCuadradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiCuadradoActionPerformed
         // TODO add your handling code here:
-        TablaChi tchi = new TablaChi(new JFrame(), true,this.distribucion, Integer.valueOf(this.txtIntervalos.getText()));
+        TablaChi tchi = new TablaChi(new JFrame(), true);
+        tchi.setTestChi(this.testChi);
         tchi.setVisible(true);
-        
     }//GEN-LAST:event_btnChiCuadradoActionPerformed
 
     /**
