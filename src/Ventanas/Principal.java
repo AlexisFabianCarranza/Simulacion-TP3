@@ -44,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
         btnGrafico = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        btnGrafico1 = new javax.swing.JButton();
+        btnChiCuadrado = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txtIntervalos = new javax.swing.JTextField();
 
@@ -96,10 +96,10 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setText("Cantidad de números a generar: ");
 
-        btnGrafico1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_icon-62-document-table_314426.png"))); // NOI18N
-        btnGrafico1.addActionListener(new java.awt.event.ActionListener() {
+        btnChiCuadrado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_icon-62-document-table_314426.png"))); // NOI18N
+        btnChiCuadrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrafico1ActionPerformed(evt);
+                btnChiCuadradoActionPerformed(evt);
             }
         });
 
@@ -137,7 +137,7 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGrafico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGrafico1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnChiCuadrado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,7 +163,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(98, 98, 98)
-                        .addComponent(btnGrafico1)
+                        .addComponent(btnChiCuadrado)
                         .addGap(28, 28, 28)
                         .addComponent(btnGrafico)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -232,9 +232,12 @@ public class Principal extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_cmbDistribucionActionPerformed
 
-    private void btnGrafico1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrafico1ActionPerformed
+    private void btnChiCuadradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiCuadradoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGrafico1ActionPerformed
+        TablaChi tchi = new TablaChi(new JFrame(), true,this.distribucion, Integer.valueOf(this.txtIntervalos.getText()));
+        tchi.setVisible(true);
+        
+    }//GEN-LAST:event_btnChiCuadradoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,9 +275,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChiCuadrado;
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnGrafico;
-    private javax.swing.JButton btnGrafico1;
     private javax.swing.JComboBox<String> cmbDistribucion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -5,20 +5,26 @@
  */
 package Ventanas;
 
+import distribuciones.Distribucion;
+
 /**
  *
  * @author nicolastomassi
  */
 public class TablaChi extends javax.swing.JDialog {
-
+    private Distribucion distribucion;
+    private int cantidadDeIntervalos;
+    
     /**
      * Creates new form TablaChi
      */
-    public TablaChi(java.awt.Frame parent, boolean modal) {
+    public TablaChi(java.awt.Frame parent, boolean modal, Distribucion dist, int cantInt) {
         super(parent, modal);
         initComponents();
+        this.distribucion = dist;
+        this.cantidadDeIntervalos = cantInt;
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
