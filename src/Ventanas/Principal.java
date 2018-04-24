@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -96,6 +97,8 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel3.setText("Cantidad de números a generar: ");
 
+        txtCantidad.setText("0");
+
         btnChiCuadrado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/if_icon-62-document-table_314426.png"))); // NOI18N
         btnChiCuadrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +107,8 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jLabel4.setText("Cantidad de Intervalos:");
+
+        txtIntervalos.setText("0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,7 +180,15 @@ public class Principal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void agregarFila(double numero)
+    {
+        DefaultTableModel modelo = (DefaultTableModel) this.tblNum.getModel();
+        int numFila = modelo.getRowCount() + 1;
+        String[] datos = {String.valueOf(numFila), String.valueOf(numero)}; // Cantidad de columnas de la tabla
+        modelo.addRow(datos);
+    }
+    
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         //genera un ArrayList con todos los números generados
         
@@ -189,13 +202,10 @@ public class Principal extends javax.swing.JFrame {
         }
         
         this.numeros = this.distribucion.generarNumeros(cantidad);
-        
-        /*int vueltas = Integer.parseInt(txtNum.getText());
-
-        for (int i = 0; i < vueltas; i++)
+        for (Object i: this.numeros)
         {
-            this.agregarFila(generador.generarNumero());
-        }*/
+            this.agregarFila((double)i);
+        }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoActionPerformed
