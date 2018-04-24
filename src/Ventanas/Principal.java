@@ -246,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         /*DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
         
-        for (int i = 0; i < this.tblNum.getRowCount(); i++)
+        for (int i = 0; i < this.testChi; i++)
         {
             dtsc.addValue(Integer.parseInt((this.tblNum.getValueAt(i, 1).toString())), "Observada", this.tablaChi.getValueAt(i, 0).toString());
             dtsc.addValue(Double.parseDouble((this.tablaChi.getValueAt(i, 2).toString())), "Esperada", this.tablaChi.getValueAt(i, 0).toString());
@@ -258,7 +258,7 @@ public class Principal extends javax.swing.JFrame {
         vtn.add(c);
         vtn.setSize(900, 700);
         vtn.setLocationRelativeTo(null);
-        vtn.setVisible(tru*/
+        vtn.setVisible(true);*/
     }//GEN-LAST:event_btnGraficoActionPerformed
 
     private void cmbDistribucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDistribucionActionPerformed
