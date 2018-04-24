@@ -182,7 +182,7 @@ public class Principal extends javax.swing.JFrame {
         int cantidad = Integer.valueOf(this.txtCantidad.getText());
         int intervalos = Integer.valueOf(this.txtIntervalos.getText());
         
-        if (cantidad <= 0 || intervalos <= 0) {
+        if ( cantidad <= 0 || intervalos <= 0 || this.cmbDistribucion.getSelectedIndex() == 0) {
             //en caso de ser cero la cantidad solicitada o negativa no hace nada
             JOptionPane.showMessageDialog(null, "Error: Debe ingresar todos los datos");
             return;
