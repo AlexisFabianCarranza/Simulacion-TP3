@@ -6,6 +6,8 @@
 package Ventanas;
 
 import distribuciones.Distribucion;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import testChiCuadrado.*;
 
 /**
@@ -27,6 +29,40 @@ public class TablaChi extends javax.swing.JDialog {
         this.testChi = testChi;
     }
     
+    private void generarTabla(){
+        ArrayList<Double> esperadas = this.testChi.getEsperadasAgrupadas();
+        ArrayList<Double> observadas = this.testChi.getObservadasAgrupadas();
+        ArrayList<double[]> intervalos = this.testChi.getIntervalosAgrupados(); 
+        ArrayList<Double> chis = this.testChi.diferenciaYalCuadrado();
+        String intervalo;
+        
+        for(int i = 0; i < intervalos.size(); i++)
+        {
+            intervalo = String.valueOf(intervalos.get(i)[0]) + String.valueOf(intervalos.get(i)[1]);
+            this.agregarFilas(intervalo, String.valueOf(observadas.get(i)), String.valueOf(esperadas.get(i)), String.valueOf(chis.get(i)));
+        }
+    }
+    
+    private void agregarFilas(String intervalo, String observado, String esperado, String chi)
+    {
+        DefaultTableModel model =  (DefaultTableModel) this.tablaChi.getModel();
+        String datos[] = {intervalo, observado, esperado, chi};
+        model.addRow(datos);
+        
+    }
+    
+    private void ejecutarTest(){
+        if (this.testChi.esAprobado()) {
+            this.lblAceptado.setVisible(true);
+            this.lblChiCalculado.setText(this.lblChiCalculado + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
+            //this.lblChiTabulado.setText(this.lblChiTabulado + " " + String.valueOf(this.testChi.);
+        }   
+        
+        else {
+
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +80,7 @@ public class TablaChi extends javax.swing.JDialog {
         tablaChi = new javax.swing.JTable();
         lblGrado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        btnGraficar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -62,7 +99,7 @@ public class TablaChi extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Intervalo", "fo", "fe", "(fo - fe)^2", "((fo - fe)^2)/fe"
+                "Intervalo", "fo", "fe", "((fo - fe)^2)/fe"
             }
         ));
         tablaChi.setName(""); // NOI18N
@@ -73,6 +110,8 @@ public class TablaChi extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Test  Chi-Cuadrado");
 
+        btnGraficar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/grafico-de-barras.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,28 +119,30 @@ public class TablaChi extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addComponent(lblAceptado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
                 .addComponent(lblCancelado)
                 .addGap(193, 193, 193))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblChiTabulado)
-                        .addComponent(lblGrado))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(lblChiCalculado)))
-                .addGap(208, 208, 208))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addComponent(btnGraficar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(158, 158, 158)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblChiTabulado)
+                                    .addComponent(lblGrado)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(212, 212, 212)
+                                .addComponent(lblChiCalculado))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(231, 231, 231)
-                        .addComponent(jLabel1)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,17 +150,21 @@ public class TablaChi extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(lblChiTabulado)
-                .addGap(18, 18, 18)
-                .addComponent(lblGrado)
-                .addGap(18, 18, 18)
-                .addComponent(lblChiCalculado)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblCancelado)
-                    .addComponent(lblAceptado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnGraficar)
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblCancelado)
+                            .addComponent(lblAceptado)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblChiTabulado)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblGrado)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblChiCalculado)))
                 .addContainerGap())
         );
 
@@ -169,6 +214,7 @@ public class TablaChi extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGraficar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAceptado;
