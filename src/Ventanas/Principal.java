@@ -244,27 +244,42 @@ public class Principal extends javax.swing.JFrame {
     
     private void btnGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoActionPerformed
         // TODO add your handling code here:
-        /*DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
-        
-        for (int i = 0; i < this.testChi; i++)
+        DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
+        int []observadas = this.testChi.getContadorFrecuencia();
+        ArrayList esperadas = this.testChi.getEsperadas();
+        ArrayList intervalos = this.testChi.getIntervalosGenerados();
+        System.out.println(observadas.length);
+        System.out.println(esperadas.size());
+        System.out.println(intervalos.size());
+        for (int i = 0; i < esperadas.size() ; i++)
         {
-            dtsc.addValue(Integer.parseInt((this.tblNum.getValueAt(i, 1).toString())), "Observada", this.tablaChi.getValueAt(i, 0).toString());
-            dtsc.addValue(Double.parseDouble((this.tablaChi.getValueAt(i, 2).toString())), "Esperada", this.tablaChi.getValueAt(i, 0).toString());
+            double[] intervalo = (double[]) intervalos.get(i);
+            //String aux = Math.round(intervalo[0]*100.0) + " - " + Math.round(intervalo[1]*100.0); 
+            String aux = intervalo[0] + " - " + intervalo[1];
+            Integer aux1 = observadas[i];
+            dtsc.addValue(Integer.parseInt(aux1.toString()), "Observada", aux);
+            dtsc.addValue(Double.parseDouble(esperadas.get(i).toString()), "Esperada", aux);
         }
         
         JFreeChart jf = ChartFactory.createBarChart3D("Grafica de frecuencias", "Intervalos", "Frecuencia", dtsc, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel c = new ChartPanel(jf);
         JDialog vtn = new JDialog(new javax.swing.JFrame(), true);
         vtn.add(c);
-        vtn.setSize(900, 700);
+        vtn.setSize(1200, 700);
         vtn.setLocationRelativeTo(null);
-        vtn.setVisible(true);*/
+        vtn.setVisible(true);
     }//GEN-LAST:event_btnGraficoActionPerformed
-
+    public void limpiarTabla(){
+        DefaultTableModel tb = (DefaultTableModel) this.tblNum.getModel();
+        int a = this.tblNum.getRowCount()-1;
+        for (int i = a; i >= 0; i--) {          
+        tb.removeRow(tb.getRowCount()-1);
+        }
+    }
     private void cmbDistribucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDistribucionActionPerformed
         //obtiene la distribución para generar los números aleatorios, derivando a otra ventana para
         // la toma de los datos según qué distribución se solicite
-        
+        this.limpiarTabla();
         int opc = cmbDistribucion.getSelectedIndex();
         
         switch (opc) {
