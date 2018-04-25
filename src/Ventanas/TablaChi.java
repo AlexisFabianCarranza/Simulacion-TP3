@@ -38,7 +38,7 @@ public class TablaChi extends javax.swing.JDialog {
         
         for(int i = 0; i < intervalos.size(); i++)
         {
-            intervalo = String.valueOf(intervalos.get(i)[0]) + String.valueOf(intervalos.get(i)[1]);
+            intervalo = String.valueOf(intervalos.get(i)[0]) +  " - " + String.valueOf(intervalos.get(i)[1]);
             this.agregarFilas(intervalo, String.valueOf(observadas.get(i)), String.valueOf(esperadas.get(i)), String.valueOf(chis.get(i)));
         }
     }
@@ -51,15 +51,21 @@ public class TablaChi extends javax.swing.JDialog {
         
     }
     
-    private void ejecutarTest(){
+    public void ejecutarTest(){
+        this.generarTabla();
+        
+        this.lblChiCalculado.setText(this.lblChiCalculado.getText() + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
+        this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getGradosDeLibertad()));
+        this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getNumeroTabla(this.testChi.getGradosDeLibertad()))); 
+        
         if (this.testChi.esAprobado()) {
             this.lblAceptado.setVisible(true);
-            this.lblChiCalculado.setText(this.lblChiCalculado + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
-            //this.lblChiTabulado.setText(this.lblChiTabulado + " " + String.valueOf(this.testChi.);
-        }   
-        
+            this.lblCancelado.setVisible(false);
+            
+        }
         else {
-
+            this.lblCancelado.setVisible(true);
+            this.lblAceptado.setVisible(false);
         }
     }
     

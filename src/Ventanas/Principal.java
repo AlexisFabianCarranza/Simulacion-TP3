@@ -295,6 +295,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         TablaChi tchi = new TablaChi(new JFrame(), true);
         tchi.setTestChi(this.testChi);
+        tchi.ejecutarTest();
         tchi.setVisible(true);
     }//GEN-LAST:event_btnChiCuadradoActionPerformed
 
