@@ -209,10 +209,8 @@ public class TablaChi extends javax.swing.JDialog {
         for (int i = 0; i < esperadas.size() ; i++)
         {
             double[] intervalo = (double[]) intervalos.get(i);
-            //String aux = Math.round(intervalo[0]*100.0) + " - " + Math.round(intervalo[1]*100.0); 
             String aux = intervalo[0] + " - " + intervalo[1];
             System.out.println(aux);
-            //Integer aux1 = observadas[i];
             Double aux1 = observadas.get(i);
             dtsc.addValue(Double.parseDouble(aux1.toString()), "Observada", aux);
             dtsc.addValue(Double.parseDouble(esperadas.get(i).toString()), "Esperada", aux);

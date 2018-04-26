@@ -66,7 +66,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Selecciones una Distribucion: ");
 
-        cmbDistribucion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opcion...", "Distribución Normal", "Distribución Exponencial", "Distribución Uniforme", "Distribución Poisson", " " }));
+        cmbDistribucion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opcion...", "Distribución Normal", "Distribución Exponencial", "Distribución Uniforme", "Distribución Poisson" }));
         cmbDistribucion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbDistribucionActionPerformed(evt);
@@ -251,7 +251,6 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < esperadas.size() ; i++)
         {
             double[] intervalo = (double[]) intervalos.get(i);
-            //String aux = Math.round(intervalo[0]*100.0) + " - " + Math.round(intervalo[1]*100.0); 
             String aux = intervalo[0] + " - " + intervalo[1];
             Integer aux1 = observadas[i];
             dtsc.addValue(Integer.parseInt(aux1.toString()), "Observada", aux);
