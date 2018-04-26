@@ -163,6 +163,9 @@
           <Image iconType="3" name="/Imagenes/grafico-de-barras.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGraficarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

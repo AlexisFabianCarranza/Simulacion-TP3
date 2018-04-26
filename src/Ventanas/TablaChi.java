@@ -7,7 +7,13 @@ package Ventanas;
 
 import distribuciones.Distribucion;
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 import testChiCuadrado.*;
 
 /**
@@ -36,10 +42,17 @@ public class TablaChi extends javax.swing.JDialog {
         ArrayList<Double> chis = this.testChi.diferenciaYalCuadrado();
         String intervalo;
         
+        double observada, esperada, chi;
+        
+        
         for(int i = 0; i < intervalos.size(); i++)
         {
+            observada = Math.round(observadas.get(i)*1000.0) / 1000.0;
+            esperada = Math.round(esperadas.get(i)*1000.0) / 1000.0;
+            chi = Math.round(chis.get(i)*1000.0) / 1000.0;
+            
             intervalo = String.valueOf(intervalos.get(i)[0]) +  " - " + String.valueOf(intervalos.get(i)[1]);
-            this.agregarFilas(intervalo, String.valueOf(observadas.get(i)), String.valueOf(esperadas.get(i)), String.valueOf(chis.get(i)));
+            this.agregarFilas(intervalo, String.valueOf(observada), String.valueOf(esperada), String.valueOf(chi));
         }
     }
     
@@ -67,8 +80,10 @@ public class TablaChi extends javax.swing.JDialog {
             this.lblCancelado.setVisible(true);
             this.lblAceptado.setVisible(false);
         }
-        this.lblChiCalculado.setText(this.lblChiCalculado.getText() + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
-        this.lblGrado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getGradosDeLibertad()));
+        
+        double sumatoria = (Math.round(this.testChi.generarSumatoriaChi() * 1000.0) / 1000.0);
+        this.lblChiCalculado.setText(this.lblChiCalculado.getText() + " " + String.valueOf(sumatoria));
+        this.lblGrado.setText(this.lblGrado.getText() + " " + String.valueOf(this.testChi.getGradosDeLibertad()));
         this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getNumeroTabla(this.testChi.getGradosDeLibertad()))); 
     
     }   
@@ -120,6 +135,11 @@ public class TablaChi extends javax.swing.JDialog {
         jLabel1.setText("Test  Chi-Cuadrado");
 
         btnGraficar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/grafico-de-barras.png"))); // NOI18N
+        btnGraficar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -179,6 +199,33 @@ public class TablaChi extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
+        DefaultCategoryDataset dtsc = new DefaultCategoryDataset();
+        //int []observadas = this.testChi.getContadorFrecuencia();
+        ArrayList<Double> observadas = this.testChi.getObservadasAgrupadas();
+        ArrayList esperadas = this.testChi.getEsperadasAgrupadas();
+        ArrayList intervalos = this.testChi.getIntervalosAgrupados();
+        for (int i = 0; i < esperadas.size() ; i++)
+        {
+            double[] intervalo = (double[]) intervalos.get(i);
+            //String aux = Math.round(intervalo[0]*100.0) + " - " + Math.round(intervalo[1]*100.0); 
+            String aux = intervalo[0] + " - " + intervalo[1];
+            System.out.println(aux);
+            //Integer aux1 = observadas[i];
+            Double aux1 = observadas.get(i);
+            dtsc.addValue(Double.parseDouble(aux1.toString()), "Observada", aux);
+            dtsc.addValue(Double.parseDouble(esperadas.get(i).toString()), "Esperada", aux);
+        }
+        
+        JFreeChart jf = ChartFactory.createBarChart3D("Grafica de frecuencias", "Intervalos", "Frecuencia", dtsc, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel c = new ChartPanel(jf);
+        JDialog vtn = new JDialog(new javax.swing.JFrame(), true);
+        vtn.add(c);
+        vtn.setSize(1200, 700);
+        vtn.setLocationRelativeTo(null);
+        vtn.setVisible(true);
+    }//GEN-LAST:event_btnGraficarActionPerformed
 
     /**
      * @param args the command line arguments

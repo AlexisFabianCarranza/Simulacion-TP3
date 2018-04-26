@@ -248,9 +248,6 @@ public class Principal extends javax.swing.JFrame {
         int []observadas = this.testChi.getContadorFrecuencia();
         ArrayList esperadas = this.testChi.getEsperadas();
         ArrayList intervalos = this.testChi.getIntervalosGenerados();
-        System.out.println(observadas.length);
-        System.out.println(esperadas.size());
-        System.out.println(intervalos.size());
         for (int i = 0; i < esperadas.size() ; i++)
         {
             double[] intervalo = (double[]) intervalos.get(i);
