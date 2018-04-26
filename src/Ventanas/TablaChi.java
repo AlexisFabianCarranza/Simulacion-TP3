@@ -54,21 +54,24 @@ public class TablaChi extends javax.swing.JDialog {
     public void ejecutarTest(){
         this.generarTabla();
         
-        this.lblChiCalculado.setText(this.lblChiCalculado.getText() + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
-        this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getGradosDeLibertad()));
-        this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getNumeroTabla(this.testChi.getGradosDeLibertad()))); 
+        
+        
         
         if (this.testChi.esAprobado()) {
             this.lblAceptado.setVisible(true);
             this.lblCancelado.setVisible(false);
             
         }
+        
         else {
             this.lblCancelado.setVisible(true);
             this.lblAceptado.setVisible(false);
         }
-    }
+        this.lblChiCalculado.setText(this.lblChiCalculado.getText() + " " + String.valueOf(this.testChi.generarSumatoriaChi()));
+        this.lblGrado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getGradosDeLibertad()));
+        this.lblChiTabulado.setText(this.lblChiTabulado.getText() + " " + String.valueOf(this.testChi.getNumeroTabla(this.testChi.getGradosDeLibertad()))); 
     
+    }   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
